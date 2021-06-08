@@ -18,10 +18,6 @@ class ImgConverter:
         elif self.from_ext == 'jpg' and self.to_ext == 'png':
             self.jpg2png(img_path)
 
-    def read_img(self, img_path):
-        self.img_path = img_path
-        self.img = cv2.imread(img_path)
-
     def png2jpg(self,img_path):
         img = cv2.imread(img_path)
         cv2.imwrite(img_path[:-4] + '.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 100])
@@ -34,7 +30,7 @@ class ImgConverter:
 if __name__ == '__main__':
     print('''
     =========================================================
-                        SELECT MODE
+                           SELECT MODE
     ---------------------------------------------------------
     a: Convert a single image's extension
     d: Convert images' extension in the specified directory
