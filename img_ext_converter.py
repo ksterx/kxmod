@@ -1,15 +1,34 @@
-import os
 import glob
+import os
+
 import cv2
 import tqdm
 
-def png2jpg(filename):
-    img = cv2.imread(filename)
-    cv2.imwrite(filename[:-4] + '.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 100])
 
-def jpg2png(filename):
-    img = cv2.imread(filename)
-    cv2.imwrite(filename[:-4] + '.png', img)
+class ImgConverter:
+    def __init__(self, from_ext, to_ext, mode='d'):
+        self.mode = mode
+        self.from_ext = from_ext
+        self.to_ext = to_ext
+
+    def __call__(self, img_path):
+        if self.from_ext == 'png' and self.to_ext == 'jpg':
+            self.png2jpg(img_path)
+
+        elif self.from_ext == 'jpg' and self.to_ext == 'png':
+            self.jpg2png(img_path)
+
+    def read_img(self, img_path):
+        self.img_path = img_path
+        self.img = cv2.imread(img_path)
+
+    def png2jpg(self,img_path):
+        img = cv2.imread(img_path)
+        cv2.imwrite(img_path[:-4] + '.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, 100])
+
+    def jpg2png(self, img_path):
+        img = cv2.imread(img_path)
+        cv2.imwrite(img_path[:-4] + '.png', img)
 
 
 if __name__ == '__main__':
@@ -23,7 +42,6 @@ if __name__ == '__main__':
     ''')
 
     mode = input('MODE: ')
-    converter = ImgConverter()
 
     if mode == 'a':
         dst_ext = input('To PNG/JPG: ')
@@ -33,9 +51,9 @@ if __name__ == '__main__':
 
     elif mode == 'd':
         img_dir = input('Directory path: ')
-        from_ext = input('From PNG/JPG: ')
-        dst_ext = input('To PNG/JPG: ')
+        from_ext = input('From png/jpg: ')
+        to_ext = input('To png/jpg: ')
+        converter = ImgConverter(from_ext=from_ext, to_ext=to_ext)
 
-    
         for img_path in tqdm.tqdm(glob.glob(img_dir + f'/*.{from_ext.lower()}')):
-            png2jpg(img_path)
+            converter(img_path)
