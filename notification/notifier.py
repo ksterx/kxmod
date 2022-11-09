@@ -2,7 +2,7 @@ import json
 
 import requests
 
-from . import my_config
+from .. import my_config
 
 
 def line_notify(message):
