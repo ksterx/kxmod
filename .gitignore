@@ -252,3 +252,5 @@ runs/
 .DS_Store
 *alias
 *.command
+
+credentials.yaml

@@ -6,7 +6,7 @@ if __name__ == "__main__":
     if app == "l":
         print("You have selected LINE.")
         line_token = input("TOKEN: ")
-    filename = "credential.yaml"
+    filename = "credentials.yaml"
 
     if not os.path.isfile(filename):
         with open(filename, mode="w") as f:
