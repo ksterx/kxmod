@@ -1,4 +1,5 @@
 import json
+import os
 from abc import ABC, abstractmethod
 
 import requests
@@ -13,7 +14,7 @@ class Bot(ABC):
         """
 
         self.messenger = messenger
-        with open("credentials.yaml") as f:
+        with open(f"{os.path.dirname(__file__)}/credentials.yaml") as f:
             self.credentials = yaml.safe_load(f)
 
     @abstractmethod
@@ -35,11 +36,15 @@ class LineBot(Bot):
     def __init__(self):
         super().__init__("line")
 
-    def say(self, message):
+    def say(self, message, image_path=None):
         token = self.credentials["LINE_TOKEN"]
         payload = {"message": message}
         headers = {"Authorization": "Bearer " + token}
-        requests.post(self.API, data=payload, headers=headers)
+        if image_path is not None:
+            files = {"imageFile": open(image_path, "rb")}
+        else:
+            files = None
+        requests.post(self.API, data=payload, headers=headers, files=files)
 
 
 class SlackBot(Bot):
@@ -47,5 +52,20 @@ class SlackBot(Bot):
         super().__init__("slack")
 
     def say(self, message):
-        webhook = self.credentials["SLACK_WEBHOOK_URL"]
-        requests.post(webhook, json.dumps({"text": message}))
+        url = "https://slack.com/api/chat.postMessage"
+        data = {
+            "token": self.credentials["SLACK_BOT_TOKEN"],
+            "channel": self.credentials["SLACK_BOT_CHANNEL"],
+            "text": message,
+        }
+        requests.post(url, data=data)
+
+    def upload(self, message: str, file_path: str):
+        url = "https://slack.com/api/files.upload"
+        data = {
+            "token": self.credentials["SLACK_BOT_TOKEN"],
+            "channels": self.credentials["SLACK_BOT_CHANNEL"],
+            "initial_comment": message,
+        }
+        files = {"file": open(file_path, "rb")}
+        requests.post(url, data=data, files=files)
