@@ -21,7 +21,7 @@ class Bot(ABC):
     def say(self, message):
         pass
 
-    def monitor(self, func):
+    def listen(self, func):
         def wrapper(*args, **kwargs):
             message = func(*args, **kwargs)
             self.say(message)
