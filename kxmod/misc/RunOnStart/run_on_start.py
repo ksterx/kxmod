@@ -35,7 +35,7 @@ def main():
     image_path = "/tmp/screenshot.png"
     screenshot(image_path)
     bot = SlackBot()
-    bot.upload("OTP", image_path)
+    bot.show("OTP", image_path)
     bot.say(get_ip())
 
 

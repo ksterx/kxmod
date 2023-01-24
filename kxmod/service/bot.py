@@ -60,7 +60,7 @@ class SlackBot(Bot):
         }
         requests.post(url, data=data)
 
-    def upload(self, message: str, file_path: str):
+    def show(self, message: str, file_path: str):
         url = "https://slack.com/api/files.upload"
         data = {
             "token": self.credentials["SLACK_BOT_TOKEN"],

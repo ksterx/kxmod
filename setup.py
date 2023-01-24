@@ -6,5 +6,7 @@ setup(
     install_requires=[
         "PySimpleGUI",
         "pyperclip",
+        "requests",
+        "pywinctl",
     ],
 )
