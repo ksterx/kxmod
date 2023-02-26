@@ -1,4 +1,4 @@
-sleep 10
+sleep 5
 teamviewer
-sleep 10
-/home/ksterx/miniconda3/bin/python /home/ksterx/Development/PythonProjects/kxmod/kxmod/misc/RunOnStart/run_on_start.py
+sleep 5
+/home/ksterx/Applications/miniconda3/envs/ai/bin/python /home/ksterx/Development/Python\ Projects/kxmod/kxmod/misc/RunOnStart/run_on_start.py

@@ -8,13 +8,17 @@ from kxmod.service.bot import SlackBot
 
 
 def popup(app_name):
+    exist_app = False
     for window in pwc.getAllTitles():
         if app_name in window:
             win = pwc.getWindowsWithTitle(window)[0]
             win.activate()
+            exist_app = True
         else:
             win = pwc.getWindowsWithTitle(window)[0]
             win.minimize()
+    if not exist_app:
+        raise ValueError("The app is not open. Try again after opening the app.")
 
 
 def screenshot(image_path):
