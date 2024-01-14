@@ -11,7 +11,7 @@ from kxmod.service.bot import SlackBot
 
 def popup(app_name):
     window_list = pwc.getAllTitles()
-    timeout = 10  # seconds
+    timeout = 60  # seconds
     freq = 0.1  # seconds
     while app_name not in window_list:
         time.sleep(freq)
