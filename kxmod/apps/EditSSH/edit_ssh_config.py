@@ -42,15 +42,20 @@ def set_layout(conf_dict: dict):
                     user_input = sg.Input(default_text=value, font=FONT)
                     subkeys.append([sg.Text(key, font=FONT)])
                     subvalues.append([user_input])
-        layout.append([sg.Column(subkeys), sg.Column(subvalues)])
+        if subkeys and subvalues:  # Make sure there's something to add
+            layout.append([sg.Column(subkeys), sg.Column(subvalues)])
 
+    # Define the buttons layout separately
+    buttons_layout = [sg.Button("OK", font=FONT), sg.Button("Cancel", font=FONT)]
+
+    # Add the scrollable column and the buttons layout to the main layout
     return [
         [
             sg.Column(
                 layout, scrollable=True, vertical_scroll_only=True, size=(600, 400)
-            ),
-            [sg.OK(font=FONT), sg.Cancel(font=FONT)],
-        ]
+            )
+        ],
+        [sg.Column([buttons_layout], justification="right")],
     ]
 
 
